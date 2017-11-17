@@ -12,11 +12,11 @@ import static org.testng.Assert.assertEquals;
 public class Tests extends TestBase {
 
     @Test
-    public void titleTest(){
+    public void titleTest() throws Exception{
         HomePage homePage = new HomePage(driver);
         homePage.clickContinue();
         //System.out.println(homePage.getTitle());
-        assertEquals( driver.getTitle(), "Ski Utah | Utah Ski Resorts, Lift Tickets, Ski Passes, Maps & More! - Ski Utah");
+        assertEquals( driver.getTitle(), "ageLOC Me Assessment");
     }
 
 }
