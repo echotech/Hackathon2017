@@ -12,11 +12,21 @@ import static org.testng.Assert.assertEquals;
 public class Tests extends TestBase {
 
     @Test
-    public void titleTest() throws Exception{
+    public void setupTest() throws Exception{
         HomePage homePage = new HomePage(driver);
         homePage.clickContinue();
+        homePage.enterName("Jed", "32", "male");
+        homePage.enterEthnicity("caucasian");
+        homePage.enterCity("Salt Lake City");
+        homePage.chemExposure("77");
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
+    }
+
+    @Test
+    public void chemExposureTest() throws Exception {
+        HomePage homePage = new HomePage(driver);
+        homePage.chemExposure("77");
     }
 
 }
