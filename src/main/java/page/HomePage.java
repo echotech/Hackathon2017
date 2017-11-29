@@ -66,6 +66,9 @@ public class HomePage {
     @FindBy(id = "locationText")
     WebElement cityField;
 
+    @FindBy (id = "map")
+    WebElement map;
+
     @FindBy(xpath = "//*[@id=\"pollution-window\"]/div/div[2]/div[2]")
     WebElement exposure;
 
@@ -84,7 +87,8 @@ public class HomePage {
 
     }
 
-    public void enterName(String name, String age, String gender){
+    public void enterName(String name, String age, String gender) throws Exception {
+        waitForElement(nameField);
         nameField.sendKeys(name);
         ageField.sendKeys(age);
         if (gender.equalsIgnoreCase("female")){
@@ -109,9 +113,11 @@ public class HomePage {
 
     public void enterCity(String city) throws Exception {
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-location");
+        waitForElement(map);
+        Thread.sleep(4000);
         clearLocation.click();
         Actions cityText = new Actions(driver);
-        cityText.sendKeys(city).perform();
+        cityField.sendKeys(city);
         Thread.sleep(1000);
         cityText.sendKeys(Keys.DOWN, Keys.ENTER).perform();
         cityText.moveToElement(nextButton).click().perform();
@@ -124,7 +130,7 @@ public class HomePage {
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
-        nextButton.click();
+        act.moveToElement(nextButton).click().perform();
     }
 
     public void sunExposure(int exp) throws Exception{
@@ -144,7 +150,7 @@ public class HomePage {
 
     public void waitForElement(WebElement e) throws Exception {
         do {
-            Thread.sleep(500);
+            Thread.sleep(100);
         } while (!e.isDisplayed());
     }
 }
