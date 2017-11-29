@@ -1,9 +1,12 @@
 package base;
 
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +19,13 @@ public class TestBase {
     @BeforeTest
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\\\chromedriver\\chromedriver.exe");
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+
+        options.addArguments("--disable-geolocation");
+
+
+        driver = new ChromeDriver(options);
+
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
