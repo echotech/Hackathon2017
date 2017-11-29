@@ -18,7 +18,8 @@ public class Tests extends TestBase {
         homePage.enterName("Jed", "32", "male");
         homePage.enterEthnicity("caucasian");
         homePage.enterCity("Salt Lake City");
-        homePage.chemExposure("77");
+        homePage.chemExposure(77);
+        homePage.sunExposure(50);
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
     }
@@ -26,7 +27,13 @@ public class Tests extends TestBase {
     @Test
     public void chemExposureTest() throws Exception {
         HomePage homePage = new HomePage(driver);
-        homePage.chemExposure("77");
+        homePage.chemExposure(77);
+    }
+
+    @Test
+    public void sunExposureTest() throws Exception {
+        HomePage homePage = new HomePage(driver);
+        homePage.sunExposure(50);
     }
 
 }

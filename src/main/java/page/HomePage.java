@@ -1,6 +1,7 @@
 package page;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -21,8 +22,10 @@ public class HomePage {
     }
 
     @FindBy(xpath = "//*[@id=\"page-wrap-you\"]/div[3]/div/div/div[2]/button")
-    //@FindBy(className = "continueButton")
     WebElement continueButton;
+
+    @FindBy(xpath = "(//button[contains(@class,'continueButton')])[1]")
+    WebElement continueButtonThree;
 
     @FindBy(xpath = "//*[@id=\"page-wrap-you\"]/div[2]/button")
     WebElement continueTwo;
@@ -57,8 +60,11 @@ public class HomePage {
     @FindBy(id = "locationText")
     WebElement cityField;
 
-    @FindBy(className = "knob")
+    @FindBy(xpath = "//*[@id=\"pollution-window\"]/div/div[2]/div[2]")
     WebElement exposure;
+
+    @FindBy(xpath = "//*[@id=\"environment-window\"]/div/div[2]/div[2]")
+    WebElement sunExposure;
 
     public void clickContinue() throws Exception{
         driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-start");
@@ -104,12 +110,24 @@ public class HomePage {
         nextButton.click();
     }
 
-    public void chemExposure(String exp) throws Exception{
+    public void chemExposure(int exp) throws Exception{
         driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-pollution");
-        JavascriptExecutor jse = (JavascriptExecutor)driver;
-        jse.executeScript("document.getElementsByClassName('knob')[0].style.visibility='visible'");
-        exposure.clear();
-        exposure.sendKeys(exp);
+        waitForElement(exposure);
+        int width=exposure.getSize().getWidth();
+        Actions act = new Actions(driver);
+        act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
+        nextButton.click();
+    }
+
+    public void sunExposure(int exp) throws Exception{
+        driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-environment");
+        waitForElement(sunExposure);
+        int width=sunExposure.getSize().getWidth();
+        Actions act = new Actions(driver);
+        act.moveToElement(sunExposure, ((width*exp)/100),0 ).click().perform();
+        nextButton.click();
+        waitForElement(continueButtonThree);
+        continueButtonThree.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {
