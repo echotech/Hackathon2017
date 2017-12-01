@@ -72,19 +72,32 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"pollution-window\"]/div/div[2]/div[2]")
     WebElement exposure;
 
+    @FindBy(id = "pollution-window")
+    WebElement pollutionWindow;
+
     @FindBy(xpath = "//*[@id=\"environment-window\"]/div/div[2]/div[2]")
     WebElement sunExposure;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button")
+    List<WebElement> skinType;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[2]")
+    WebElement drySkin;
 
     public void startAssessment(String url) throws Exception{
         String start = url+"#/you-start";
         driver.navigate().to(start);
+        acceptLicense();
 
+
+    }
+
+    public void acceptLicense(){
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='page-wrap-you']//label")));
 
         agreeCheckbox.click();
         continueButton.click();
         continueTwo.click();
-
     }
 
     public void enterName(String name, String age, String gender) throws Exception {
@@ -126,7 +139,9 @@ public class HomePage {
 
     public void chemExposure(int exp) throws Exception{
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-pollution");
-        waitForElement(exposure);
+        //acceptLicense();
+
+        waitForElement(pollutionWindow);
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
@@ -134,18 +149,33 @@ public class HomePage {
     }
 
     public void sunExposure(int exp) throws Exception{
+        //Debugging code
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-environment");
+        //acceptLicense();
+
+
         waitForElement(sunExposure);
         int width=sunExposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(sunExposure, ((width*exp)/100),0 ).click().perform();
+        waitForElement(nextButton);
         nextButton.click();
         waitForElement(continueButtonThree);
         continueButtonThree.click();
     }
 
-    public void skinType(String type) throws Exception {
+    public void setSkinType(String type) throws Exception {
+        //Debugging code
+        driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/skin-type");
+        acceptLicense();
 
+        waitForElement(drySkin);
+        for(WebElement e : skinType){
+            if (e.getAttribute("translate").contains(type)){
+                e.click();
+            }
+        }
+        nextButton.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {
