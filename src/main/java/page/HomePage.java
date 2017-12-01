@@ -36,8 +36,8 @@ public class HomePage {
     @FindBy(xpath = "//div[@id='page-wrap-you']//label")
     WebElement agreeCheckbox;
 
-    @FindBy(className = "popup-wrap")
-    WebElement pageBody;
+    @FindBy(className = "popup")
+    WebElement popup;
 
     @FindBy(xpath = "//*[@id=\"name-text\"]")
     WebElement nameField;
@@ -78,11 +78,17 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"environment-window\"]/div/div[2]/div[2]")
     WebElement sunExposure;
 
-    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button")
-    List<WebElement> skinType;
-
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[2]")
     WebElement drySkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
+    WebElement normalSkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
+    WebElement comboSkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
+    WebElement oilySkin;
 
     public void startAssessment(String url) throws Exception{
         String start = url+"#/you-start";
@@ -92,9 +98,9 @@ public class HomePage {
 
     }
 
-    public void acceptLicense(){
+    public void acceptLicense() throws Exception{
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='page-wrap-you']//label")));
-
+        //waitForElement(agreeCheckbox);
         agreeCheckbox.click();
         continueButton.click();
         continueTwo.click();
@@ -166,14 +172,17 @@ public class HomePage {
 
     public void setSkinType(String type) throws Exception {
         //Debugging code
-        driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/skin-type");
-        acceptLicense();
+        //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/skin-type");
+        //acceptLicense();
 
-        waitForElement(drySkin);
-        for(WebElement e : skinType){
-            if (e.getAttribute("translate").contains(type)){
-                e.click();
-            }
+        if (type.equalsIgnoreCase("dry")) {
+            drySkin.click();
+        } else if (type.equalsIgnoreCase("normal")) {
+            normalSkin.click();
+        } else if (type.equalsIgnoreCase("combination")) {
+            comboSkin.click();
+        } else if (type.equalsIgnoreCase("oily")) {
+            oilySkin.click();
         }
         nextButton.click();
     }
