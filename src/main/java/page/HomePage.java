@@ -84,10 +84,10 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
     WebElement normalSkin;
 
-    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[4]")
     WebElement comboSkin;
 
-    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[5]")
     WebElement oilySkin;
 
     public void startAssessment(String url) throws Exception{
@@ -151,7 +151,8 @@ public class HomePage {
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
-        act.moveToElement(nextButton).click().perform();
+        waitForElement(nextButton);
+        nextButton.click();
     }
 
     public void sunExposure(int exp) throws Exception{
@@ -159,13 +160,12 @@ public class HomePage {
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-environment");
         //acceptLicense();
 
-
         waitForElement(sunExposure);
         int width=sunExposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(sunExposure, ((width*exp)/100),0 ).click().perform();
         waitForElement(nextButton);
-        nextButton.click();
+        act.moveToElement(nextButton).click().perform();
         waitForElement(continueButtonThree);
         continueButtonThree.click();
     }
@@ -174,15 +174,17 @@ public class HomePage {
         //Debugging code
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/skin-type");
         //acceptLicense();
+        waitForElement(drySkin);
+        Actions act = new Actions(driver);
 
         if (type.equalsIgnoreCase("dry")) {
-            drySkin.click();
+            act.moveToElement(drySkin).click().perform();
         } else if (type.equalsIgnoreCase("normal")) {
-            normalSkin.click();
+            act.moveToElement(normalSkin).click().perform();
         } else if (type.equalsIgnoreCase("combination")) {
-            comboSkin.click();
+            act.moveToElement(comboSkin).click().perform();
         } else if (type.equalsIgnoreCase("oily")) {
-            oilySkin.click();
+            act.moveToElement(oilySkin).click().perform();
         }
         nextButton.click();
     }
