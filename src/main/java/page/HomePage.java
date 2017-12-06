@@ -90,6 +90,9 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[5]")
     WebElement oilySkin;
 
+    @FindBy(xpath = "//*[@id=\"skin-sensitivity-window\"]/div/div[2]/div[2]")
+    WebElement irritability;
+
     public void startAssessment(String url) throws Exception{
         String start = url+"#/you-start";
         driver.navigate().to(start);
@@ -187,6 +190,18 @@ public class HomePage {
             act.moveToElement(oilySkin).click().perform();
         }
         nextButton.click();
+    }
+
+    public void skinIrritability(int exp) throws Exception{
+
+        waitForElement(irritability);
+        int width=irritability.getSize().getWidth();
+        Actions act = new Actions(driver);
+        act.moveToElement(irritability, ((width*exp)/100),0 ).click().perform();
+        waitForElement(nextButton);
+        act.moveToElement(nextButton).click().perform();
+        waitForElement(continueButtonThree);
+        continueButtonThree.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {

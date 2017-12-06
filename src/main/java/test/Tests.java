@@ -21,6 +21,7 @@ public class Tests extends TestBase {
         homePage.chemExposure(77);
         homePage.sunExposure(50);
         homePage.setSkinType("dry");
+        homePage.skinIrritability(5);
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
     }
