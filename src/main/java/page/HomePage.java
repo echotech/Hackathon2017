@@ -21,117 +21,110 @@ public class HomePage {
         this.driver = driver;
     }
 
+    //General nav
     @FindBy(xpath = "//*[@id=\"page-wrap-you\"]/div[3]/div/div/div[2]/button")
     WebElement continueButton;
-
     @FindBy(xpath = "//*[@id='home-list']/li[1]/h2")
     WebElement startEval;
-
     @FindBy(xpath = "(//button[contains(@class,'continueButton')])[1]")
     WebElement continueButtonThree;
-
     @FindBy(xpath = "//*[@id=\"page-wrap-you\"]/div[2]/button")
     WebElement continueTwo;
-
     @FindBy(xpath = "//div[@id='page-wrap-you']//label")
     WebElement agreeCheckbox;
-
     @FindBy(className = "popup")
     WebElement popup;
+    @FindBy(className = "nextButton")
+    WebElement nextButton;
+    @FindBy(xpath="//*[@id=\"page-wrap-prefs\"]/div[2]/button")
+    WebElement continueFour;
 
+
+    //Name and age
     @FindBy(xpath = "//*[@id=\"name-text\"]")
     WebElement nameField;
-
     @FindBy(xpath = "//*[@id=\"age-text\"]")
     WebElement ageField;
 
+    //Gender
     @FindBy(xpath = "//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[2]/div/button[1]")
     WebElement female;
-
     @FindBy(xpath = "//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[2]/div/button[2]")
     WebElement male;
 
-    @FindBy(className = "nextButton")
-    WebElement nextButton;
-
+    //Ethnicity
     @FindBy(xpath = "//*[@id=\"ethnicity-window\"]/ul/li")
     List<WebElement> ethnicityList;
-
     @FindBy(xpath = "//*[@id=\"ethnicity-window\"]/ul/li[17]")
     WebElement otherEthnicity;
 
+    //Location
     @FindBy(xpath = "//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[2]/div/div[1]/div/i")
     WebElement clearLocation;
-
     @FindBy(id = "locationText")
     WebElement cityField;
-
     @FindBy (id = "map")
     WebElement map;
 
+    //Pollution exposure
     @FindBy(xpath = "//*[@id=\"pollution-window\"]/div/div[2]/div[2]")
     WebElement exposure;
-
     @FindBy(id = "pollution-window")
     WebElement pollutionWindow;
 
+    //Sun exposure slider
     @FindBy(xpath = "//*[@id=\"environment-window\"]/div/div[2]/div[2]")
     WebElement sunExposure;
 
+    //Skin dryness
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[2]")
     WebElement drySkin;
-
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
     WebElement normalSkin;
-
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[4]")
     WebElement comboSkin;
-
     @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[5]")
     WebElement oilySkin;
 
+    //Skin irritability slider
     @FindBy(xpath = "//*[@id=\"skin-sensitivity-window\"]/div/div[2]/div[2]")
     WebElement irritability;
 
+    //AHA usage
     @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[1]")
     WebElement stopped;
-
     @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[2]")
     WebElement continued;
-
     @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[3]")
     WebElement noReaction;
-
     @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[4]")
     WebElement neverUsed;
 
+    //Age spots slider
     @FindBy(xpath = "//*[@id=\"skin-spots-window\"]/div/div[2]/div[2]")
     WebElement ageSpots;
 
+    //Wrinkle slider
     @FindBy(xpath = "//*[@id=\"skin-lines-window\"]/div[2]/div[2]/div[2]")
     WebElement wrinkles;
 
+    //Firmness
     @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[1]")
     WebElement firm;
-
     @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[2]")
     WebElement someFirm;
-
     @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[3]")
     WebElement someSag;
-
     @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[4]")
     WebElement sigSag;
 
+    //Radiance
     @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[1]")
     WebElement shiny;
-
     @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[2]")
     WebElement someShine;
-
     @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[3]")
     WebElement someDull;
-
     @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[4]")
     WebElement veryDull;
 
@@ -148,6 +141,7 @@ public class HomePage {
     WebElement someRough;
     @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[4]")
     WebElement rough;
+
 
 
     public void startAssessment(String url) throws Exception{
@@ -366,6 +360,8 @@ public class HomePage {
         }
         waitForElement(shiny);
         nextButton.click();
+        waitForElement(continueFour);
+        continueFour.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {
