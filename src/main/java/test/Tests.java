@@ -28,6 +28,7 @@ public class Tests extends TestBase {
         homePage.setPoreSize(40);
         homePage.setFirmness("veryFirm");
         homePage.setRadiance("veryRadiant");
+        homePage.setTexture("rough");
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
     }

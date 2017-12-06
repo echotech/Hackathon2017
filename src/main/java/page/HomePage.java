@@ -139,6 +139,16 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"skin-pores-window\"]/div/div[2]/div[2]")
     WebElement poreSize;
 
+    //Texture
+    @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[1]")
+    WebElement smooth;
+    @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[2]")
+    WebElement someSmooth;
+    @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[3]")
+    WebElement someRough;
+    @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[4]")
+    WebElement rough;
+
 
     public void startAssessment(String url) throws Exception{
         String start = url;
@@ -336,6 +346,23 @@ public class HomePage {
             act.moveToElement(someDull).click().perform();
         } else if (rad.equalsIgnoreCase("veryDull")) {
             act.moveToElement(veryDull).click().perform();
+        }
+        waitForElement(shiny);
+        nextButton.click();
+    }
+
+    public void setTexture(String rad) throws Exception {
+        waitForElement(smooth);
+        Actions act = new Actions(driver);
+
+        if (rad.equalsIgnoreCase("smooth")) {
+            act.moveToElement(smooth).click().perform();
+        } else if (rad.equalsIgnoreCase("someSmooth")) {
+            act.moveToElement(someSmooth).click().perform();
+        } else if (rad.equalsIgnoreCase("someRough")) {
+            act.moveToElement(someRough).click().perform();
+        } else if (rad.equalsIgnoreCase("rough")) {
+            act.moveToElement(rough).click().perform();
         }
         waitForElement(shiny);
         nextButton.click();
