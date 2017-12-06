@@ -20,6 +20,8 @@ public class Tests extends TestBase {
         homePage.enterCity("Salt Lake City");
         homePage.chemExposure(77);
         homePage.sunExposure(50);
+        homePage.setSkinType("dry");
+        homePage.skinIrritability(5);
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
     }
@@ -34,6 +36,12 @@ public class Tests extends TestBase {
     public void sunExposureTest() throws Exception {
         HomePage homePage = new HomePage(driver);
         homePage.sunExposure(50);
+    }
+
+    @Test
+    public void skinTypeTest() throws Exception {
+        HomePage homePage = new HomePage(driver);
+        homePage.setSkinType("dry");
     }
 
 }

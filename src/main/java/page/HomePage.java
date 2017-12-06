@@ -36,8 +36,8 @@ public class HomePage {
     @FindBy(xpath = "//div[@id='page-wrap-you']//label")
     WebElement agreeCheckbox;
 
-    @FindBy(className = "popup-wrap")
-    WebElement pageBody;
+    @FindBy(className = "popup")
+    WebElement popup;
 
     @FindBy(xpath = "//*[@id=\"name-text\"]")
     WebElement nameField;
@@ -72,19 +72,41 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"pollution-window\"]/div/div[2]/div[2]")
     WebElement exposure;
 
+    @FindBy(id = "pollution-window")
+    WebElement pollutionWindow;
+
     @FindBy(xpath = "//*[@id=\"environment-window\"]/div/div[2]/div[2]")
     WebElement sunExposure;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[2]")
+    WebElement drySkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[3]")
+    WebElement normalSkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[4]")
+    WebElement comboSkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-type-window\"]/button[5]")
+    WebElement oilySkin;
+
+    @FindBy(xpath = "//*[@id=\"skin-sensitivity-window\"]/div/div[2]/div[2]")
+    WebElement irritability;
 
     public void startAssessment(String url) throws Exception{
         String start = url+"#/you-start";
         driver.navigate().to(start);
+        acceptLicense();
 
+
+    }
+
+    public void acceptLicense() throws Exception{
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='page-wrap-you']//label")));
-
+        //waitForElement(agreeCheckbox);
         agreeCheckbox.click();
         continueButton.click();
         continueTwo.click();
-
     }
 
     public void enterName(String name, String age, String gender) throws Exception {
@@ -126,26 +148,60 @@ public class HomePage {
 
     public void chemExposure(int exp) throws Exception{
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-pollution");
-        waitForElement(exposure);
+        //acceptLicense();
+
+        waitForElement(pollutionWindow);
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
-        act.moveToElement(nextButton).click().perform();
+        waitForElement(nextButton);
+        nextButton.click();
     }
 
     public void sunExposure(int exp) throws Exception{
+        //Debugging code
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-environment");
+        //acceptLicense();
+
         waitForElement(sunExposure);
         int width=sunExposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(sunExposure, ((width*exp)/100),0 ).click().perform();
-        nextButton.click();
+        waitForElement(nextButton);
+        act.moveToElement(nextButton).click().perform();
         waitForElement(continueButtonThree);
         continueButtonThree.click();
     }
 
-    public void skinType(String type) throws Exception {
+    public void setSkinType(String type) throws Exception {
+        //Debugging code
+        //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/skin-type");
+        //acceptLicense();
+        waitForElement(drySkin);
+        Actions act = new Actions(driver);
 
+        if (type.equalsIgnoreCase("dry")) {
+            act.moveToElement(drySkin).click().perform();
+        } else if (type.equalsIgnoreCase("normal")) {
+            act.moveToElement(normalSkin).click().perform();
+        } else if (type.equalsIgnoreCase("combination")) {
+            act.moveToElement(comboSkin).click().perform();
+        } else if (type.equalsIgnoreCase("oily")) {
+            act.moveToElement(oilySkin).click().perform();
+        }
+        nextButton.click();
+    }
+
+    public void skinIrritability(int exp) throws Exception{
+
+        waitForElement(irritability);
+        int width=irritability.getSize().getWidth();
+        Actions act = new Actions(driver);
+        act.moveToElement(irritability, ((width*exp)/100),0 ).click().perform();
+        waitForElement(nextButton);
+        act.moveToElement(nextButton).click().perform();
+        waitForElement(continueButtonThree);
+        continueButtonThree.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {
