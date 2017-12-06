@@ -93,13 +93,59 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"skin-sensitivity-window\"]/div/div[2]/div[2]")
     WebElement irritability;
 
+    @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[1]")
+    WebElement stopped;
+
+    @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[2]")
+    WebElement continued;
+
+    @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[3]")
+    WebElement noReaction;
+
+    @FindBy(xpath = "//*[@id=\"skin-aha-window\"]/button[4]")
+    WebElement neverUsed;
+
+    @FindBy(xpath = "//*[@id=\"skin-spots-window\"]/div/div[2]/div[2]")
+    WebElement ageSpots;
+
+    @FindBy(xpath = "//*[@id=\"skin-lines-window\"]/div[2]/div[2]/div[2]")
+    WebElement wrinkles;
+
+    @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[1]")
+    WebElement firm;
+
+    @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[2]")
+    WebElement someFirm;
+
+    @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[3]")
+    WebElement someSag;
+
+    @FindBy(xpath="//*[@id=\"skin-firmness-window\"]/button[4]")
+    WebElement sigSag;
+
+    @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[1]")
+    WebElement shiny;
+
+    @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[2]")
+    WebElement someShine;
+
+    @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[3]")
+    WebElement someDull;
+
+    @FindBy(xpath="//*[@id=\"skin-radiance-window\"]/button[4]")
+    WebElement veryDull;
+
+    //Pore
+    @FindBy(xpath = "//*[@id=\"skin-pores-window\"]/div/div[2]/div[2]")
+    WebElement poreSize;
+
+
     public void startAssessment(String url) throws Exception{
-        String start = url+"#/you-start";
+        String start = url;
         driver.navigate().to(start);
         acceptLicense();
 
-
-    }
+        }
 
     public void acceptLicense() throws Exception{
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='page-wrap-you']//label")));
@@ -154,7 +200,7 @@ public class HomePage {
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        waitForElement(pollutionWindow);
         nextButton.click();
     }
 
@@ -192,7 +238,7 @@ public class HomePage {
         nextButton.click();
     }
 
-    public void skinIrritability(int exp) throws Exception{
+    public void setSkinIrritability(int exp) throws Exception{
 
         waitForElement(irritability);
         int width=irritability.getSize().getWidth();
@@ -200,8 +246,99 @@ public class HomePage {
         act.moveToElement(irritability, ((width*exp)/100),0 ).click().perform();
         waitForElement(nextButton);
         act.moveToElement(nextButton).click().perform();
-        waitForElement(continueButtonThree);
-        continueButtonThree.click();
+
+    }
+
+    public void setAhaUse(String use) throws Exception{
+        waitForElement(stopped);
+        Actions act = new Actions(driver);
+
+        if (use.equalsIgnoreCase("stopped")) {
+            act.moveToElement(stopped).click().perform();
+        } else if (use.equalsIgnoreCase("noReaction")) {
+            act.moveToElement(noReaction).click().perform();
+        } else if (use.equalsIgnoreCase("never")) {
+            act.moveToElement(neverUsed).click().perform();
+        } else if (use.equalsIgnoreCase("continued")) {
+            act.moveToElement(continued).click().perform();
+        }
+        waitForElement(stopped);
+        nextButton.click();
+    }
+
+    public void setAgeSpots(int exp) throws Exception{
+
+        waitForElement(ageSpots);
+        int width=ageSpots.getSize().getWidth();
+        Actions act = new Actions(driver);
+        act.moveToElement(ageSpots, ((width*exp)/100),0 ).click().perform();
+        waitForElement(nextButton);
+        act.moveToElement(nextButton).click().perform();
+
+    }
+
+    public void setWrinkles(int wrink, int nose, int fore) throws Exception {
+        waitForElement(wrinkles);
+        int width=wrinkles.getSize().getWidth();
+        Actions act = new Actions(driver);
+        //Set wrinkles
+        act.moveToElement(wrinkles, ((width*wrink)/100),0 ).click().perform();
+        waitForElement(nextButton);
+        act.moveToElement(nextButton).click().perform();
+        //Set nose wrinkles
+        act.moveToElement(wrinkles, ((width*nose)/100),0 ).click().perform();
+        waitForElement(nextButton);
+        //Set forehead wrinkles
+        act.moveToElement(nextButton).click().perform();
+        act.moveToElement(wrinkles, ((width*fore)/100),0 ).click().perform();
+        waitForElement(nextButton);
+        act.moveToElement(nextButton).click().perform();
+    }
+
+    public void setPoreSize(int exp) throws Exception{
+
+        waitForElement(poreSize);
+        int width=poreSize.getSize().getWidth();
+        Actions act = new Actions(driver);
+        act.moveToElement(poreSize, ((width*exp)/100),0 ).click().perform();
+        waitForElement(poreSize);
+        act.moveToElement(nextButton).click().perform();
+
+    }
+
+    public void setFirmness(String use) throws Exception{
+        waitForElement(firm);
+        Actions act = new Actions(driver);
+
+        if (use.equalsIgnoreCase("firm")) {
+            act.moveToElement(firm).click().perform();
+        } else if (use.equalsIgnoreCase("someFirm")) {
+            act.moveToElement(someFirm).click().perform();
+
+        } else if (use.equalsIgnoreCase("someSag")) {
+            act.moveToElement(someSag).click().perform();
+        } else if (use.equalsIgnoreCase("verySag")) {
+            act.moveToElement(sigSag).click().perform();
+        }
+        waitForElement(firm);
+        nextButton.click();
+    }
+
+    public void setRadiance(String rad) throws Exception {
+        waitForElement(shiny);
+        Actions act = new Actions(driver);
+
+        if (rad.equalsIgnoreCase("veryRadiant")) {
+            act.moveToElement(shiny).click().perform();
+        } else if (rad.equalsIgnoreCase("someRadiant")) {
+            act.moveToElement(someShine).click().perform();
+        } else if (rad.equalsIgnoreCase("someDull")) {
+            act.moveToElement(someDull).click().perform();
+        } else if (rad.equalsIgnoreCase("veryDull")) {
+            act.moveToElement(veryDull).click().perform();
+        }
+        waitForElement(shiny);
+        nextButton.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {

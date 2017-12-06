@@ -21,7 +21,13 @@ public class Tests extends TestBase {
         homePage.chemExposure(77);
         homePage.sunExposure(50);
         homePage.setSkinType("dry");
-        homePage.skinIrritability(5);
+        homePage.setSkinIrritability(5);
+        homePage.setAhaUse("stopped");
+        homePage.setAgeSpots(20);
+        homePage.setWrinkles(30,45,55);
+        homePage.setPoreSize(40);
+        homePage.setFirmness("veryFirm");
+        homePage.setRadiance("veryRadiant");
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
     }
