@@ -40,6 +40,7 @@ public class HomePage {
     WebElement continueFour;
 
 
+
     //Name and age
     @FindBy(xpath = "//*[@id=\"name-text\"]")
     WebElement nameField;
@@ -142,6 +143,12 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[4]")
     WebElement rough;
 
+    //Day Fragrance
+    @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[1]")
+    WebElement yesFragrance;
+    @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[1]")
+    WebElement noFragrance;
+
 
 
     public void startAssessment(String url) throws Exception{
@@ -168,6 +175,7 @@ public class HomePage {
         } else {
             male.click();
         }
+        waitForElement(nameField);
         nextButton.click();
     }
 
@@ -180,6 +188,7 @@ public class HomePage {
                 break;
             }
         }
+        waitForElement(nextButton);
         nextButton.click();
     }
 
@@ -239,6 +248,7 @@ public class HomePage {
         } else if (type.equalsIgnoreCase("oily")) {
             act.moveToElement(oilySkin).click().perform();
         }
+        waitForElement(drySkin);
         nextButton.click();
     }
 
@@ -248,8 +258,9 @@ public class HomePage {
         int width=irritability.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(irritability, ((width*exp)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        waitForElement(irritability);
         act.moveToElement(nextButton).click().perform();
+
 
     }
 
@@ -276,7 +287,7 @@ public class HomePage {
         int width=ageSpots.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(ageSpots, ((width*exp)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        waitForElement(ageSpots);
         act.moveToElement(nextButton).click().perform();
 
     }
@@ -295,7 +306,7 @@ public class HomePage {
         //Set forehead wrinkles
         act.moveToElement(nextButton).click().perform();
         act.moveToElement(wrinkles, ((width*fore)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        waitForElement(wrinkles);
         act.moveToElement(nextButton).click().perform();
     }
 
@@ -314,7 +325,7 @@ public class HomePage {
         waitForElement(firm);
         Actions act = new Actions(driver);
 
-        if (use.equalsIgnoreCase("firm")) {
+        if (use.equalsIgnoreCase("veryFirm")) {
             act.moveToElement(firm).click().perform();
         } else if (use.equalsIgnoreCase("someFirm")) {
             act.moveToElement(someFirm).click().perform();
@@ -358,10 +369,22 @@ public class HomePage {
         } else if (rad.equalsIgnoreCase("rough")) {
             act.moveToElement(rough).click().perform();
         }
-        waitForElement(shiny);
+        waitForElement(smooth);
         nextButton.click();
         waitForElement(continueFour);
         continueFour.click();
+    }
+
+    public void setDayFragrance(String frag){
+        waitForElement(yesFragrance);
+        Actions act = new Actions(driver);
+        if (frag.equalsIgnoreCase("yes")){
+            act.moveToElement(yesFragrance).click().perform();
+        } else {
+            act.moveToElement(noFragrance).click().perform();
+        }
+        waitForElement(yesFragrance);
+        nextButton.click();
     }
 
     public void waitForElement(WebElement e) throws Exception {
