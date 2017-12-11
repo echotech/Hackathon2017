@@ -38,6 +38,8 @@ public class HomePage {
     WebElement nextButton;
     @FindBy(xpath="//*[@id=\"page-wrap-prefs\"]/div[2]/button")
     WebElement continueFour;
+    @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[3]/div[1]/button")
+    WebElement finishButton;
 
 
 
@@ -143,12 +145,19 @@ public class HomePage {
     @FindBy(xpath = "//*[@id=\"skin-texture-window\"]/button[4]")
     WebElement rough;
 
-    //Day Fragrance
+    //Fragrance
     @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[1]")
     WebElement yesFragrance;
-    @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[1]")
+    @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[2]")
     WebElement noFragrance;
+    @FindBy(xpath="//*[@id=\"preferences-day-moisturizer-window\"]/div/div[2]/div[2]")
+    WebElement richness;
+    @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[1]")
+    WebElement modContinue;
 
+    //Finishing up
+    @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[3]/div[2]/div[2]/p[1]")
+    WebElement careCode;
 
 
     public void startAssessment(String url) throws Exception{
@@ -213,7 +222,7 @@ public class HomePage {
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
-        waitForElement(pollutionWindow);
+        waitForElement(exposure);
         nextButton.click();
     }
 
@@ -385,6 +394,51 @@ public class HomePage {
         }
         waitForElement(yesFragrance);
         nextButton.click();
+        setMoisturizer("28");
+        }
+
+    public void setNightFragrance(String frag) throws Exception{
+        waitForElement(yesFragrance);
+        Actions act = new Actions(driver);
+        if (frag.equalsIgnoreCase("yes")){
+            act.moveToElement(yesFragrance).click().perform();
+        } else {
+            act.moveToElement(noFragrance).click().perform();
+        }
+        waitForElement(yesFragrance);
+        nextButton.click();
+        waitForElement(richness);
+        nextButton.click();
+
+    }
+
+    public void setMoisturizer(String moist) throws Exception{
+        waitForElement(richness);
+        int width=richness.getSize().getWidth();
+        int percent;
+        Actions act = new Actions(driver);
+        if (moist.equals("")){
+            percent=51;
+        } else {
+            percent= Integer.parseInt(moist);
+        }
+        act.moveToElement(richness, ((width*percent)/100),0 ).click().perform();
+
+        if(percent<30){
+            waitForElement(modContinue);
+            act.moveToElement(modContinue).click().perform();
+        }
+        waitForElement(richness);
+        act.moveToElement(nextButton).click().perform();
+
+    }
+
+    public String finishAssessment() throws Exception{
+        waitForElement(finishButton);
+        finishButton.click();
+        System.out.println(careCode);
+        return careCode.getText();
+
     }
 
     public void waitForElement(WebElement e) throws Exception {
