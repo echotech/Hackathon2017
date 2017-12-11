@@ -375,7 +375,7 @@ public class HomePage {
         continueFour.click();
     }
 
-    public void setDayFragrance(String frag){
+    public void setDayFragrance(String frag) throws Exception{
         waitForElement(yesFragrance);
         Actions act = new Actions(driver);
         if (frag.equalsIgnoreCase("yes")){
