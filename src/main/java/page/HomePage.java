@@ -161,6 +161,7 @@ public class HomePage {
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[2]")
     WebElement keepPref;
 
+
     //Finishing up
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[3]/div[2]/div[2]/p[1]")
     WebElement careCode;
@@ -430,10 +431,10 @@ public class HomePage {
         }
         act.moveToElement(richness, ((width*percent)/100),0 ).click().perform();
 
-        if(percent<30){
+        if(percent<29||(percent>57&&percent<72)){
             waitForElement(modContinue);
             act.moveToElement(modContinue).click().perform();
-        } else if(percent>60){
+        } else if(percent>71&&percent<87){
             waitForElement(keepPref);
             act.moveToElement(keepPref).click().perform();
         }
@@ -451,6 +452,11 @@ public class HomePage {
             percent=51;
         } else {
             percent= Integer.parseInt(moist);
+        }
+
+        if (percent<26){
+            waitForElement(keepPref);
+            act.moveToElement(keepPref).click().perform();
         }
         act.moveToElement(nightRichness, ((width*percent)/100),0 ).click().perform();
         waitForElement(nightRichness);
