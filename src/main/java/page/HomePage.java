@@ -152,8 +152,14 @@ public class HomePage {
     WebElement noFragrance;
     @FindBy(xpath="//*[@id=\"preferences-day-moisturizer-window\"]/div/div[2]/div[2]")
     WebElement richness;
+    @FindBy(xpath="//*[@id=\"preferences-night-moisturizer-window\"]/div/div[2]/div[2]")
+    WebElement nightRichness;
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[1]")
     WebElement modContinue;
+    @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[1]")
+    WebElement changePref;
+    @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[2]")
+    WebElement keepPref;
 
     //Finishing up
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[3]/div[2]/div[2]/p[1]")
@@ -412,7 +418,7 @@ public class HomePage {
 
     }
 
-    public void setMoisturizer(String moist) throws Exception{
+    public void setDayMoisturizer(String moist) throws Exception{
         waitForElement(richness);
         int width=richness.getSize().getWidth();
         int percent;
@@ -427,8 +433,27 @@ public class HomePage {
         if(percent<30){
             waitForElement(modContinue);
             act.moveToElement(modContinue).click().perform();
+        } else if(percent>60){
+            waitForElement(keepPref);
+            act.moveToElement(keepPref).click().perform();
         }
         waitForElement(richness);
+        act.moveToElement(nextButton).click().perform();
+
+    }
+
+    public void setNightMoisturizer(String moist) throws Exception{
+        waitForElement(nightRichness);
+        int width=nightRichness.getSize().getWidth();
+        int percent;
+        Actions act = new Actions(driver);
+        if (moist.equals("")){
+            percent=51;
+        } else {
+            percent= Integer.parseInt(moist);
+        }
+        act.moveToElement(nightRichness, ((width*percent)/100),0 ).click().perform();
+        waitForElement(nightRichness);
         act.moveToElement(nextButton).click().perform();
 
     }
@@ -436,7 +461,7 @@ public class HomePage {
     public String finishAssessment() throws Exception{
         waitForElement(finishButton);
         finishButton.click();
-        System.out.println(careCode);
+        System.out.println(careCode.getText());
         return careCode.getText();
 
     }
