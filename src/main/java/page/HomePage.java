@@ -310,10 +310,12 @@ public class HomePage {
         waitForElement(nextButton);
         act.moveToElement(nextButton).click().perform();
         //Set nose wrinkles
+        waitForElement(wrinkles);
         act.moveToElement(wrinkles, ((width*nose)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        waitForElement(wrinkles);
         //Set forehead wrinkles
         act.moveToElement(nextButton).click().perform();
+        waitForElement(wrinkles);
         act.moveToElement(wrinkles, ((width*fore)/100),0 ).click().perform();
         waitForElement(wrinkles);
         act.moveToElement(nextButton).click().perform();
