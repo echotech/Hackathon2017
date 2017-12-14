@@ -394,7 +394,7 @@ public class HomePage {
         }
         waitForElement(yesFragrance);
         nextButton.click();
-        setMoisturizer("28");
+
         }
 
     public void setNightFragrance(String frag) throws Exception{
@@ -406,8 +406,6 @@ public class HomePage {
             act.moveToElement(noFragrance).click().perform();
         }
         waitForElement(yesFragrance);
-        nextButton.click();
-        waitForElement(richness);
         nextButton.click();
 
     }

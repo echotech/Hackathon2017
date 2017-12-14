@@ -30,7 +30,9 @@ public class Tests extends TestBase {
         homePage.setRadiance("veryRadiant");
         homePage.setTexture("rough");
         homePage.setDayFragrance("yes");
+        homePage.setMoisturizer("");
         homePage.setNightFragrance("no");
+        homePage.setMoisturizer("20");
         homePage.finishAssessment();
         //System.out.println(homePage.getTitle());
         assertEquals( driver.getTitle(), "ageLOC Me Assessment");
