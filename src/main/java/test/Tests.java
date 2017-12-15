@@ -39,19 +39,19 @@ public class Tests extends TestBase {
     }
 
     @Test
-    public void chemExposureTest() throws Exception {
+    public void chemExposureTest(){
         HomePage homePage = new HomePage(driver);
         homePage.chemExposure(77);
     }
 
     @Test
-    public void sunExposureTest() throws Exception {
+    public void sunExposureTest(){
         HomePage homePage = new HomePage(driver);
         homePage.sunExposure(50);
     }
 
     @Test
-    public void skinTypeTest() throws Exception {
+    public void skinTypeTest(){
         HomePage homePage = new HomePage(driver);
         homePage.setSkinType("dry");
     }
