@@ -467,6 +467,7 @@ public class HomePage {
     public String finishAssessment() throws Exception{
         waitForElement(finishButton);
         finishButton.click();
+        waitForElement(careCode);
         System.out.println(careCode.getText());
         return careCode.getText();
 
