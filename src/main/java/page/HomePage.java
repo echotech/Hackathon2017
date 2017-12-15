@@ -148,6 +148,8 @@ public class HomePage {
     //Fragrance
     @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[1]")
     WebElement yesFragrance;
+    @FindBy(xpath="//*[@id=\"preferences-night-moisturizer-window\"]/div/div[2]/div[2]")
+    WebElement nightFragrance;
     @FindBy(xpath="//*[@id=\"preferences-fragrance-window\"]/button[2]")
     WebElement noFragrance;
     @FindBy(xpath="//*[@id=\"preferences-day-moisturizer-window\"]/div/div[2]/div[2]")
@@ -156,8 +158,8 @@ public class HomePage {
     WebElement nightRichness;
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[1]")
     WebElement modContinue;
-    @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[1]")
-    WebElement changePref;
+    @FindBy(xpath = "//div[@class='alert-options']/button")
+    List<WebElement> modalOptions;
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[4]/div/div/div/button[2]")
     WebElement keepPref;
 
@@ -167,14 +169,14 @@ public class HomePage {
     WebElement careCode;
 
 
-    public void startAssessment(String url) throws Exception{
+    public void startAssessment(String url){
         String start = url;
         driver.navigate().to(start);
         acceptLicense();
 
         }
 
-    public void acceptLicense() throws Exception{
+    public void acceptLicense(){
         new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='page-wrap-you']//label")));
         //waitForElement(agreeCheckbox);
         agreeCheckbox.click();
@@ -182,8 +184,10 @@ public class HomePage {
         continueTwo.click();
     }
 
-    public void enterName(String name, String age, String gender) throws Exception {
-        waitForElement(nameField);
+    public void enterName(String name, String age, String gender){
+        //waitForElement(nameField);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(nameField));
         nameField.sendKeys(name);
         ageField.sendKeys(age);
         if (gender.equalsIgnoreCase("female")){
@@ -191,27 +195,32 @@ public class HomePage {
         } else {
             male.click();
         }
-        waitForElement(nameField);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
+        //waitForElement(nameField);
         nextButton.click();
     }
 
-    public void enterEthnicity(String ethnicity) throws Exception {
+    public void enterEthnicity(String ethnicity){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+
         for (WebElement e : ethnicityList){
-            waitForElement(e);
+            wait.until(ExpectedConditions.elementToBeClickable(e));
 
             if (e.getText().trim().equalsIgnoreCase(ethnicity)){
                 e.click();
                 break;
             }
         }
-        waitForElement(nextButton);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
+        //waitForElement(nextButton);
         nextButton.click();
     }
 
     public void enterCity(String city) throws Exception {
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-location");
-        waitForElement(map);
-        Thread.sleep(4000);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(clearLocation));
+        //Thread.sleep(4000);
         clearLocation.click();
         Actions cityText = new Actions(driver);
         cityField.sendKeys(city);
@@ -221,38 +230,42 @@ public class HomePage {
 
     }
 
-    public void chemExposure(int exp) throws Exception{
+    public void chemExposure(int exp){
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-pollution");
         //acceptLicense();
 
-        waitForElement(pollutionWindow);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(exposure));
         int width=exposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(exposure, ((width*exp)/100),0 ).click().perform();
-        waitForElement(exposure);
+
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
     }
 
-    public void sunExposure(int exp) throws Exception{
+    public void sunExposure(int exp){
         //Debugging code
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-environment");
         //acceptLicense();
-
-        waitForElement(sunExposure);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(sunExposure));
         int width=sunExposure.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(sunExposure, ((width*exp)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
-        waitForElement(continueButtonThree);
+        wait.until(ExpectedConditions.elementToBeClickable(continueButtonThree));
         continueButtonThree.click();
     }
 
-    public void setSkinType(String type) throws Exception {
+    public void setSkinType(String type){
         //Debugging code
         //driver.navigate().to("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/skin-type");
         //acceptLicense();
-        waitForElement(drySkin);
+
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(drySkin));
         Actions act = new Actions(driver);
 
         if (type.equalsIgnoreCase("dry")) {
@@ -264,24 +277,25 @@ public class HomePage {
         } else if (type.equalsIgnoreCase("oily")) {
             act.moveToElement(oilySkin).click().perform();
         }
-        waitForElement(drySkin);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
     }
 
-    public void setSkinIrritability(int exp) throws Exception{
-
-        waitForElement(irritability);
+    public void setSkinIrritability(int exp){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(irritability));
         int width=irritability.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(irritability, ((width*exp)/100),0 ).click().perform();
-        waitForElement(irritability);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
 
 
     }
 
-    public void setAhaUse(String use) throws Exception{
-        waitForElement(stopped);
+    public void setAhaUse(String use){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(stopped));
         Actions act = new Actions(driver);
 
         if (use.equalsIgnoreCase("stopped")) {
@@ -293,54 +307,59 @@ public class HomePage {
         } else if (use.equalsIgnoreCase("continued")) {
             act.moveToElement(continued).click().perform();
         }
-        waitForElement(stopped);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
     }
 
-    public void setAgeSpots(int exp) throws Exception{
+    public void setAgeSpots(int exp){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(ageSpots));
 
-        waitForElement(ageSpots);
         int width=ageSpots.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(ageSpots, ((width*exp)/100),0 ).click().perform();
-        waitForElement(ageSpots);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
 
     }
 
-    public void setWrinkles(int wrink, int nose, int fore) throws Exception {
-        waitForElement(wrinkles);
+    public void setWrinkles(int wrink, int nose, int fore)  {
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(wrinkles));
+
         int width=wrinkles.getSize().getWidth();
         Actions act = new Actions(driver);
         //Set wrinkles
         act.moveToElement(wrinkles, ((width*wrink)/100),0 ).click().perform();
-        waitForElement(nextButton);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
         //Set nose wrinkles
-        waitForElement(wrinkles);
+        wait.until(ExpectedConditions.elementToBeClickable(wrinkles));
         act.moveToElement(wrinkles, ((width*nose)/100),0 ).click().perform();
-        waitForElement(wrinkles);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         //Set forehead wrinkles
         act.moveToElement(nextButton).click().perform();
-        waitForElement(wrinkles);
+        wait.until(ExpectedConditions.elementToBeClickable(wrinkles));
         act.moveToElement(wrinkles, ((width*fore)/100),0 ).click().perform();
-        waitForElement(wrinkles);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
     }
 
-    public void setPoreSize(int exp) throws Exception{
+    public void setPoreSize(int exp){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(poreSize));
 
-        waitForElement(poreSize);
         int width=poreSize.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(poreSize, ((width*exp)/100),0 ).click().perform();
-        waitForElement(poreSize);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
 
     }
 
     public void setFirmness(String use) throws Exception{
-        waitForElement(firm);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(firm));
         Actions act = new Actions(driver);
 
         if (use.equalsIgnoreCase("veryFirm")) {
@@ -353,12 +372,13 @@ public class HomePage {
         } else if (use.equalsIgnoreCase("verySag")) {
             act.moveToElement(sigSag).click().perform();
         }
-        waitForElement(firm);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
     }
 
     public void setRadiance(String rad) throws Exception {
-        waitForElement(shiny);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(shiny));
         Actions act = new Actions(driver);
 
         if (rad.equalsIgnoreCase("veryRadiant")) {
@@ -370,12 +390,13 @@ public class HomePage {
         } else if (rad.equalsIgnoreCase("veryDull")) {
             act.moveToElement(veryDull).click().perform();
         }
-        waitForElement(shiny);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
     }
 
     public void setTexture(String rad) throws Exception {
-        waitForElement(smooth);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(smooth));
         Actions act = new Actions(driver);
 
         if (rad.equalsIgnoreCase("smooth")) {
@@ -387,40 +408,43 @@ public class HomePage {
         } else if (rad.equalsIgnoreCase("rough")) {
             act.moveToElement(rough).click().perform();
         }
-        waitForElement(smooth);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
-        waitForElement(continueFour);
+        wait.until(ExpectedConditions.elementToBeClickable(continueFour));
         continueFour.click();
     }
 
     public void setDayFragrance(String frag) throws Exception{
-        waitForElement(yesFragrance);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(yesFragrance));
         Actions act = new Actions(driver);
         if (frag.equalsIgnoreCase("yes")){
             act.moveToElement(yesFragrance).click().perform();
         } else {
             act.moveToElement(noFragrance).click().perform();
         }
-        waitForElement(yesFragrance);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
 
         }
 
     public void setNightFragrance(String frag) throws Exception{
-        waitForElement(yesFragrance);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(yesFragrance));
         Actions act = new Actions(driver);
         if (frag.equalsIgnoreCase("yes")){
             act.moveToElement(yesFragrance).click().perform();
         } else {
             act.moveToElement(noFragrance).click().perform();
         }
-        waitForElement(yesFragrance);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         nextButton.click();
 
     }
 
-    public void setDayMoisturizer(String moist) throws Exception{
-        waitForElement(richness);
+    public void setDayMoisturizer(String moist){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(richness));
         int width=richness.getSize().getWidth();
         int percent;
         Actions act = new Actions(driver);
@@ -430,21 +454,32 @@ public class HomePage {
             percent= Integer.parseInt(moist);
         }
         act.moveToElement(richness, ((width*percent)/100),0 ).click().perform();
-
-        if(percent<29||(percent>57&&percent<72)){
-            waitForElement(modContinue);
-            act.moveToElement(modContinue).click().perform();
-        } else if(percent>71&&percent<87){
-            waitForElement(keepPref);
-            act.moveToElement(keepPref).click().perform();
-        }
-        waitForElement(richness);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
+        if(percent<29||(percent>57&&percent<72)){
+            if(modContinue.isDisplayed()) {
+                System.out.println("No SPF");
+                wait.until(ExpectedConditions.elementToBeClickable(modContinue));
+                act.moveToElement(modContinue).click().perform();
+                wait.until(ExpectedConditions.elementToBeClickable(nextButton));
+                act.moveToElement(nextButton).click().perform();
+            }
+        } else if(keepPref.isDisplayed()) {
+            if(keepPref.isDisplayed()) {
+                System.out.println("Irritated Skin");
+                wait.until(ExpectedConditions.elementToBeClickable(keepPref));
+                act.moveToElement(keepPref).click().perform();
+                wait.until(ExpectedConditions.elementToBeClickable(nextButton));
+                act.moveToElement(nextButton).click().perform();
+            }
+        }
+
 
     }
 
     public void setNightMoisturizer(String moist) throws Exception{
-        waitForElement(nightRichness);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(nightRichness));
         int width=nightRichness.getSize().getWidth();
         int percent;
         Actions act = new Actions(driver);
@@ -454,23 +489,35 @@ public class HomePage {
             percent= Integer.parseInt(moist);
         }
 
-        if (percent<26){
-            waitForElement(keepPref);
-            act.moveToElement(keepPref).click().perform();
-        }
         act.moveToElement(nightRichness, ((width*percent)/100),0 ).click().perform();
-        waitForElement(nightRichness);
+        wait.until(ExpectedConditions.elementToBeClickable(nextButton));
         act.moveToElement(nextButton).click().perform();
+
+        if (percent<26){
+            System.out.println("Light moisturizer");
+            wait.until(ExpectedConditions.elementToBeClickable(keepPref));
+            act.moveToElement(keepPref).click().perform();
+            wait.until(ExpectedConditions.elementToBeClickable(nextButton));
+            act.moveToElement(nextButton).click().perform();
+            }
+
 
     }
 
-    public String finishAssessment() throws Exception{
-        waitForElement(finishButton);
-        finishButton.click();
-        waitForElement(careCode);
-        System.out.println(careCode.getText());
-        return careCode.getText();
+    public void finishAssessment(){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(finishButton));
 
+        finishButton.click();
+
+
+    }
+
+    public String getCareCode(){
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(careCode));
+
+        return careCode.getText();
     }
 
     public void waitForElement(WebElement e) throws Exception {

@@ -35,7 +35,7 @@ public class Tests extends TestBase {
         homePage.setNightMoisturizer("20");
         homePage.finishAssessment();
         //System.out.println(homePage.getTitle());
-        assertEquals( driver.getTitle(), "ageLOC Me Assessment");
+        assertEquals( homePage.getCareCode(), "AB73");
     }
 
     @Test
