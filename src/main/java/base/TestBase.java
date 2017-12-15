@@ -20,16 +20,11 @@ public class TestBase {
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\\\chromedriver\\chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
-
         options.addArguments("--disable-geolocation");
-
-
         driver = new ChromeDriver(options);
-
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-    }
+        }
 
     @AfterTest
     public void tearDown() throws InterruptedException {
