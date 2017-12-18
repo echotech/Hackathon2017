@@ -177,8 +177,10 @@ public class HomePage {
         }
 
     public void acceptLicense(){
-        new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@id='page-wrap-you']//label")));
-        //waitForElement(agreeCheckbox);
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.elementToBeClickable(agreeCheckbox));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", agreeCheckbox);
+
         agreeCheckbox.click();
         continueButton.click();
         continueTwo.click();

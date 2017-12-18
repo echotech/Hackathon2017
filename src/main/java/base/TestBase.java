@@ -4,6 +4,7 @@ package base;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
@@ -25,9 +26,9 @@ public class TestBase {
         options.addArguments("--disable-geolocation");
 
         //Mobile Emulation
-        /*Map<String, String> mobileEmulation = new HashMap<>();
-        mobileEmulation.put("deviceName", "Nexus 5");
-        options.setExperimentalOption("mobileEmulation", mobileEmulation);*/
+        Map<String, String> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("deviceName", "iPad");
+        options.setExperimentalOption("mobileEmulation", mobileEmulation);
 
 
         driver = new ChromeDriver(options);
