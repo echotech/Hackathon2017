@@ -13,7 +13,7 @@ public class Tests extends TestBase {
 
     @Test
     public void setupTest() throws Exception{
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(driver, false);
         homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-start");
         homePage.enterName("Jed", "32", "male");
         homePage.enterEthnicity("caucasian");
@@ -40,7 +40,7 @@ public class Tests extends TestBase {
 
     @Test
     public void setupEmuTest() throws Exception{
-        HomePage homePage = new HomePage(driver);
+        HomePage homePage = new HomePage(driver, true);
         homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-start");
         homePage.enterName("Jed", "32", "male");
         homePage.enterEthnicity("caucasian");
@@ -65,17 +65,5 @@ public class Tests extends TestBase {
         assertEquals( homePage.getCareCode(), "AB73");
     }
 
-
-    @Test
-    public void sunExposureTest(){
-        HomePage homePage = new HomePage(driver);
-        homePage.sunExposure(50);
-    }
-
-    @Test
-    public void skinTypeTest(){
-        HomePage homePage = new HomePage(driver);
-        homePage.setSkinType("dry");
-    }
 
 }
