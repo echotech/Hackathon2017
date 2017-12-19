@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class HomePage {
     private WebDriver driver;
+    private boolean mobileTest;
 
 
     public HomePage(WebDriver driver){
@@ -169,6 +170,28 @@ public class HomePage {
     @FindBy(xpath="//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[3]/div[2]/div[2]/p[1]")
     WebElement careCode;
 
+    //Helper methods
+    public void scrollToAndClickElement(WebElement element, int offset) {
+        try {
+            JavascriptExecutor jse = (JavascriptExecutor) driver;
+            jse.executeScript("window.scrollTo(0," + element.getLocation().getY() + ")");
+            jse.executeScript("window.scrollBy(0,-" + offset + ")");
+            element.click();
+            //if (mobileTest)
+            //    jse.executeScript("window.scrollTo(0,0)");
+        } catch (Exception e) {
+            System.out.println("Unable to locate element.");
+            e.printStackTrace();
+        }
+    }
+
+    public void setMobileTest(boolean mob){
+        if(mob){
+            mobileTest=true;
+        } else {
+            mobileTest=false;
+        }
+    }
 
     public void startAssessment(String url){
         String start = url;

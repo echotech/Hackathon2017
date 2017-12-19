@@ -26,11 +26,16 @@ public class TestBase {
         options.addArguments("--disable-geolocation");
 
         //Mobile Emulation
-        /*Map<String, String> mobileEmulation = new HashMap<>();
-        mobileEmulation.put("deviceName", "iPad");
-        options.setExperimentalOption("mobileEmulation", mobileEmulation);*/
+        /*String deviceName = "Galaxy S5";
 
+        Map<String, String> devices =  new HashMap<>();
+        devices.put("deviceName", deviceName);
+        Map<String, Object> mobileEmulation = new HashMap<>();
+        mobileEmulation.put("mobileEmulation", devices);
+        DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+        capabilities.setCapability(ChromeOptions.CAPABILITY, mobileEmulation);*/
 
+        
         driver = new ChromeDriver(options);
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
