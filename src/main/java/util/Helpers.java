@@ -22,10 +22,12 @@ public class Helpers {
     //Helper methods
     public void scrollToAndClickElement(WebElement element, int offset) {
         try {
+            waitForElement(element);
             JavascriptExecutor jse = (JavascriptExecutor) driver;
             jse.executeScript("window.scrollTo(0," + element.getLocation().getY() + ")");
             jse.executeScript("window.scrollBy(0,-" + offset + ")");
-            element.click();
+            Actions act = new Actions(driver);
+            act.moveToElement(element).click().perform();
             if (mobileTest)
                 jse.executeScript("window.scrollTo(0,0)");
         } catch (Exception e) {
@@ -35,6 +37,7 @@ public class Helpers {
     }
 
     public void moveSlider(WebElement slider, int exp){
+        waitForElement(slider);
         int width = slider.getSize().getWidth();
         Actions act = new Actions(driver);
         act.moveToElement(slider, ((width * exp) / 100), 0).click().perform();
