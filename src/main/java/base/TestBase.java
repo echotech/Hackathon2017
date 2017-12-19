@@ -7,8 +7,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
-
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TestBase {
     protected static WebDriver driver;
+    public boolean mobileTest;
 
     @BeforeTest
     public void init() {
@@ -27,7 +26,6 @@ public class TestBase {
 
         //Mobile Emulation
         String deviceName = "Galaxy S5";
-
         Map<String, String> devices =  new HashMap<>();
         devices.put("deviceName", deviceName);
         Map<String, Object> mobileEmulation = new HashMap<>();
@@ -35,8 +33,12 @@ public class TestBase {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, mobileEmulation);
 
-        
-        driver = new ChromeDriver(capabilities);
+        if(mobileTest) {
+            driver = new ChromeDriver(capabilities);
+        } else {
+            driver = new ChromeDriver(options);
+        }
+
         driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
