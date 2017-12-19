@@ -56,9 +56,9 @@ public class Tests extends TestBase {
         homePage.setFirmness("veryFirm");
         homePage.setRadiance("veryRadiant");
         homePage.setTexture("rough");
-        homePage.setDayFragrance("yes");
+        homePage.setFragrance("yes");
         homePage.setDayMoisturizer("");
-        homePage.setNightFragrance("no");
+        homePage.setFragrance("no");
         homePage.setNightMoisturizer("20");
         homePage.finishAssessment();
         //System.out.println(homePage.getTitle());
