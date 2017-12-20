@@ -332,7 +332,7 @@ public class HomePage {
         }
     }
 
-    public void setNightMoisturizer(String moist) throws Exception {
+    public void setNightMoisturizer(String moist){
         h.waitForElement(nightRichness);
         int percent;
         if (moist.equals("")) {
