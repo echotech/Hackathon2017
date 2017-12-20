@@ -14,11 +14,10 @@ public class HomePage {
     private WebDriver driver;
     private Helpers h;
 
-    public HomePage(WebDriver driver, boolean mobile) {
+    public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
-        h = new Helpers(driver);
-        h.setMobileTest(mobile);
+        h=new Helpers(driver);
     }
 
     //General nav
