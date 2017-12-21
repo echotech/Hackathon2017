@@ -32,6 +32,7 @@ public class Helpers {
             jse.executeScript("window.scrollBy(0,-" + offset + ")");
             Actions act = new Actions(driver);
             act.moveToElement(element).click().perform();
+            System.out.println("Clicked "+ element.getText());
             if (mobileTest)
                 jse.executeScript("window.scrollTo(0,0)");
         } catch (Exception e) {

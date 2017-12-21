@@ -27,14 +27,20 @@ public class HomePage {
     WebElement continueButtonThree;
     @FindBy(xpath = "//*[@id=\"page-wrap-you\"]/div[2]/button")
     WebElement continueTwo;
-    @FindBy(xpath = "//div[@id='page-wrap-you']//label")
-    WebElement agreeCheckbox;
     @FindBy(className = "nextButton")
     WebElement nextButton;
     @FindBy(xpath = "//*[@id=\"page-wrap-prefs\"]/div[2]/button")
     WebElement continueFour;
     @FindBy(xpath = "//*[@id=\"nuskinBespokeApp\"]/div/div[3]/div/div[3]/div[1]/button")
     WebElement finishButton;
+
+    //Starting Assessment
+    @FindBy(xpath = "//*[@id=\"home-list\"]/li[1]/h2")
+    WebElement startButton;
+    @FindBy(xpath = "//*[@id=\"agreeToCookies\"]")
+    WebElement acceptCookies;
+    @FindBy(xpath = "//label[@translate='terms-conditions-agree']")
+    WebElement agreeCheckbox;
 
     //Name and age
     @FindBy(xpath = "//*[@id=\"name-text\"]")
@@ -151,13 +157,14 @@ public class HomePage {
     WebElement careCode;
 
     public void startAssessment(String url) {
-        String start = url;
-        driver.navigate().to(start);
+        driver.navigate().to(url);
+        acceptCookies.click();
+        h.scrollToAndClickElement(startButton, 0);
         acceptLicense();
     }
 
     public void acceptLicense() {
-        h.scrollToAndClickElement(agreeCheckbox,0);
+        h.scrollToAndClickElement(agreeCheckbox,1);
         h.scrollToAndClickElement(continueButton,0);
         h.scrollToAndClickElement(continueTwo,0);
     }

@@ -14,9 +14,9 @@ public class Tests extends TestBase {
 
     @Test
     public void setupTest() throws Exception{
-        setMobileTest(true);
+        setMobileTest(false);
         HomePage homePage = new HomePage(driver);
-        homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-start");
+        homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_BE/ageloc-me-assessment.html");
         homePage.enterName("Jed", "32", "male");
         homePage.enterEthnicity("caucasian");
         homePage.enterCity("Salt Lake City");
