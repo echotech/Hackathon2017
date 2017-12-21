@@ -184,7 +184,7 @@ public class HomePage {
     public void enterEthnicity(String ethnicity) {
         for (WebElement e : ethnicityList) {
             h.waitForElement(e);
-            if (e.getText().trim().equalsIgnoreCase(ethnicity)) {
+            if (e.getText().trim().toLowerCase().contains(ethnicity)) {
                 h.scrollToAndClickElement(e,0);
                 break;
             }
