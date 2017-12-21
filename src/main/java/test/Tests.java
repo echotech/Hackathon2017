@@ -14,6 +14,7 @@ public class Tests extends TestBase {
 
     @Test
     public void setupTest() throws Exception{
+        setMobileTest(true);
         HomePage homePage = new HomePage(driver);
         homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html#/you-start");
         homePage.enterName("Jed", "32", "male");

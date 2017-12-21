@@ -24,9 +24,12 @@ public class TestBase {
     @BeforeTest
     public void init() {
         System.setProperty("webdriver.chrome.driver", "C:\\\\chromedriver\\chromedriver.exe");
+    }
+
+    public void setMobileTest(boolean mobile){
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--disable-geolocation");
-        mobileTest=true;
+        mobileTest=mobile;
 
         //Mobile Emulation
         String deviceName = "Galaxy S5";
