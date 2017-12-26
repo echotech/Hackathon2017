@@ -6,6 +6,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.Helpers;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by admin on 11/15/2017.
@@ -158,7 +159,12 @@ public class HomePage {
 
     public void startAssessment(String url) {
         driver.navigate().to(url);
-        acceptCookies.click();
+        Boolean isPresent = driver.findElements(By.id("agreeToCookies")).size() > 0;
+
+            if (isPresent) {
+                acceptCookies.click();
+            }
+
         h.scrollToAndClickElement(startButton, 0);
         acceptLicense();
     }
