@@ -7,6 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 import util.Helpers;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by admin on 11/15/2017.
@@ -159,12 +160,17 @@ public class HomePage {
 
     public void startAssessment(String url) {
         driver.navigate().to(url);
-        Boolean isPresent = driver.findElements(By.id("agreeToCookies")).size() > 0;
-
-            if (isPresent) {
-                acceptCookies.click();
-            }
-
+        boolean isPresent = false;
+        try {
+            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            isPresent = driver.findElements(By.id("agreeToCookies")).size() > 0;
+        }catch(org.openqa.selenium.NoSuchElementException e) {
+            System.out.println("Couldn't find cookies element.");
+        }
+        if (isPresent){
+            acceptCookies.click();
+        }
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         h.scrollToAndClickElement(startButton, 0);
         acceptLicense();
     }
