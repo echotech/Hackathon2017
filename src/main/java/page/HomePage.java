@@ -5,6 +5,8 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import util.Helpers;
+import util.Log;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
@@ -160,12 +162,14 @@ public class HomePage {
 
     public void startAssessment(String url) {
         driver.navigate().to(url);
+        Log.info("Navigated to " + url);
         boolean isPresent = false;
         try {
-            driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
             isPresent = driver.findElements(By.id("agreeToCookies")).size() > 0;
         }catch(org.openqa.selenium.NoSuchElementException e) {
             System.out.println("Couldn't find cookies element.");
+            Log.info("Couldn't find cookies");
         }
         if (isPresent){
             acceptCookies.click();
