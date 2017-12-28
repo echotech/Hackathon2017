@@ -4,6 +4,7 @@ import base.TestBase;
 import org.testng.annotations.Test;
 import page.HomePage;
 import util.Helpers;
+import util.Log;
 
 import static org.testng.Assert.assertEquals;
 
@@ -14,7 +15,9 @@ public class Tests extends TestBase {
 
     @Test
     public void setupTest() throws Exception{
+        Log.startTestCase("setupTest");
         setMobileTest(false);
+        Log.info("Mobiletest is "+mobileTest);
         HomePage homePage = new HomePage(driver);
         homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_US/ageloc-me-assessment.html");
         homePage.enterName("Jed", "32", "male");
@@ -38,6 +41,6 @@ public class Tests extends TestBase {
         homePage.finishAssessment();
         //System.out.println(homePage.getTitle());
         assertEquals( homePage.getCareCode(), "AB73");
-
+        Log.endTestCase("setupTest");
     }
 }
