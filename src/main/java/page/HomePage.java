@@ -39,9 +39,9 @@ public class HomePage {
     WebElement finishButton;
 
     //Starting Assessment
-    @FindBy(xpath = "//*[@id=\"home-list\"]/li[1]")
+    @FindBy(xpath = "//*[@id=\"home-list\"]/li[1]/h2")
     WebElement startButton;
-    @FindBy(xpath = "//*[@id=\"agreeToCookies\"]")
+    @FindBy(xpath ="//div[@id='header']//a[@id='agreeToCookies']")
     WebElement acceptCookies;
     @FindBy(xpath = "//label[@translate='terms-conditions-agree']")
     WebElement agreeCheckbox;
@@ -165,16 +165,16 @@ public class HomePage {
         Log.info("Navigated to " + url);
         boolean isPresent = false;
         try {
-            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
             isPresent = driver.findElements(By.id("agreeToCookies")).size() > 0;
         }catch(org.openqa.selenium.NoSuchElementException e) {
             System.out.println("Couldn't find cookies element.");
             Log.info("Couldn't find cookies");
         }
         if (isPresent){
-            acceptCookies.click();
+            h.scrollToAndClickElement(acceptCookies,0);
             Log.info("Accepted cookies");
-            System.out.println("Clicked accept cookies.");
+
         }
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         h.scrollToAndClickElement(startButton, 0);
