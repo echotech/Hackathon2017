@@ -36,7 +36,7 @@ public class Helpers {
             if (mobileTest)
                 jse.executeScript("window.scrollTo(0,0)");
         } catch (Exception e) {
-            System.out.println("Unable to locate element.");
+            System.out.println("Unable to locate element " + element.getText() + ".");
             e.printStackTrace();
         }
     }

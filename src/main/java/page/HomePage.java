@@ -39,7 +39,7 @@ public class HomePage {
     WebElement finishButton;
 
     //Starting Assessment
-    @FindBy(xpath = "//*[@id=\"home-list\"]/li[1]/h2")
+    @FindBy(xpath = "//*[@id=\"home-list\"]/li[1]")
     WebElement startButton;
     @FindBy(xpath = "//*[@id=\"agreeToCookies\"]")
     WebElement acceptCookies;
@@ -173,6 +173,8 @@ public class HomePage {
         }
         if (isPresent){
             acceptCookies.click();
+            Log.info("Accepted cookies");
+            System.out.println("Clicked accept cookies.");
         }
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         h.scrollToAndClickElement(startButton, 0);
