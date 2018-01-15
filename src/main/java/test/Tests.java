@@ -3,6 +3,7 @@ package test;
 import base.TestBase;
 import org.testng.annotations.Test;
 import page.HomePage;
+import util.ExcelReader;
 import util.Helpers;
 import util.Log;
 
@@ -16,6 +17,38 @@ public class Tests extends TestBase {
     @Test
     public void setupTest() throws Exception{
         Log.startTestCase("setupTest");
+        setMobileTest(true);
+        Log.info("Mobiletest is "+mobileTest);
+        HomePage homePage = new HomePage(driver);
+        homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_BE/ageloc-me-assessment.html");
+        homePage.enterName("Jed", "32", "male");
+        homePage.enterEthnicity("caucasian");
+        homePage.enterCity("Salt Lake City");
+        homePage.chemExposure(77);
+        homePage.sunExposure(50);
+        homePage.setSkinType("dry");
+        homePage.setSkinIrritability(5);
+        homePage.setAhaUse("stopped");
+        homePage.setAgeSpots(20);
+        homePage.setWrinkles(30,45,55);
+        homePage.setPoreSize(40);
+        homePage.setFirmness("veryFirm");
+        homePage.setRadiance("veryRadiant");
+        homePage.setTexture("rough");
+        homePage.setFragrance("yes");
+        homePage.setDayMoisturizer("");
+        homePage.setFragrance("no");
+        homePage.setNightMoisturizer("20");
+        homePage.finishAssessment();
+        //System.out.println(homePage.getTitle());
+        assertEquals( homePage.getCareCode(), "AB73");
+        Log.endTestCase("setupTest");
+    }
+
+    @Test
+    public void setupTestExcel() throws Exception{
+        Log.startTestCase("setupTestExcel");
+        ExcelReader e = new ExcelReader();
         setMobileTest(true);
         Log.info("Mobiletest is "+mobileTest);
         HomePage homePage = new HomePage(driver);
