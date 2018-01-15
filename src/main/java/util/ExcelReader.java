@@ -1,52 +1,72 @@
 package util;
 
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Iterator;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
 
-    private static final String FILE_NAME = "/assessmentdata.xls";
+    private static XSSFSheet ExcelWSheet;
+    private static XSSFWorkbook ExcelWBook;
+    private static XSSFCell Cell;
+    private static XSSFRow Row;
 
-    ExcelReader(XSSFWorkbook book) {
+    public static Object[][] getTableArray(String FilePath, String SheetName) throws Exception {
+
+        String[][] tabArray = null;
 
         try {
+            FileInputStream ExcelFile = new FileInputStream(FilePath);
 
-            FileInputStream excelFile = new FileInputStream(new File(FILE_NAME));
-            Workbook workbook = new XSSFWorkbook(excelFile);
-            Sheet datatypeSheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = datatypeSheet.iterator();
+            // Access the required test data sheet
+            ExcelWBook = new XSSFWorkbook(ExcelFile);
+            ExcelWSheet = ExcelWBook.getSheet(SheetName);
+            int startRow = 1;
+            int startCol = 1;
+            int ci, cj;
+            int totalRows = ExcelWSheet.getLastRowNum();
 
-            while (iterator.hasNext()) {
+            // you can write a function as well to get Column count
+            int totalCols = 2;
+            tabArray = new String[totalRows][totalCols];
+            ci = 0;
 
-                Row currentRow = iterator.next();
-                Iterator<Cell> cellIterator = currentRow.iterator();
-
-                while (cellIterator.hasNext()) {
-
-                    Cell currentCell = cellIterator.next();
-                    //getCellTypeEnum shown as deprecated for version 3.15
-                    //getCellTypeEnum ill be renamed to getCellType starting from version 4.0
-                    if (currentCell.getCellTypeEnum() == CellType.STRING) {
-                        System.out.print(currentCell.getStringCellValue() + "--");
-                    } else if (currentCell.getCellTypeEnum() == CellType.NUMERIC) {
-                        System.out.print(currentCell.getNumericCellValue() + "--");
-                    }
-
+            for (int i = startRow; i <= totalRows; i++, ci++) {
+                cj = 0;
+                for (int j = startCol; j <= totalCols; j++, cj++) {
+                    tabArray[ci][cj] = getCellData(i, j);
+                    System.out.println(tabArray[ci][cj]);
                 }
-                System.out.println();
-
             }
         } catch (FileNotFoundException e) {
+            System.out.println("Could not find the Excel file");
             e.printStackTrace();
         } catch (IOException e) {
+            System.out.println("Could not read the Excel sheet");
             e.printStackTrace();
         }
-
+        return (tabArray);
     }
+
+    public static String getCellData(int RowNum, int ColNum) throws Exception {
+        try {
+            Cell = ExcelWSheet.getRow(RowNum).getCell(ColNum);
+            int dataType = Cell.getCellType();
+            if (dataType == 3) {
+                return "";
+            } else {
+                String CellData = Cell.getStringCellValue();
+                return CellData;
+            }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+                throw (e);
+            }
+    }
+
 }
