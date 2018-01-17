@@ -14,35 +14,22 @@ import static org.testng.Assert.assertEquals;
  * Created by admin on 11/15/2017.
  */
 public class Tests extends TestBase {
-    String xlFilePath = "/KRISHNA VOLUME/Jar Files/poi-3.16-beta1/TestData.xlsx";
-    String sheetName = "Credentials";
-    ExcelApiTest eat = null;
+    private String sTestCaseName;
+
+    private int iTestCaseRow;
 
     @DataProvider(name="userData")
     public Object[][] userFormData() throws Exception
     {
-        Object[][] data = testData(xlFilePath, sheetName);
-        return data;
-    }
+        ExcelReader.setExcelFile("C:\\Users\\Jed Reisner\\IdeaProjects\\Hackathon2017\\src\\main\\java\\testdata\\assessmentdata.xls","Sheet1");
+        sTestCaseName=this.toString();
+        sTestCaseName = ExcelReader.getTestCaseName(this.toString());
+        iTestCaseRow = ExcelReader.getRowContains(sTestCaseName,0);
 
-    public Object[][] testData(String xlFilePath, String sheetName) throws Exception
-    {
-        Object[][] excelData = null;
-        eat = new ExcelApiTest(xlFilePath);
-        int rows = eat.getRowCount(sheetName);
-        int columns = eat.getColumnCount(sheetName);
+        Object[][] testObjArray = ExcelReader.getTableArray("C:\\Users\\Jed Reisner\\IdeaProjects\\Hackathon2017\\src\\main\\java\\testdata\\assessmentdata.xls","Sheet1",iTestCaseRow);
 
-        excelData = new Object[rows-1][columns];
+        return (testObjArray);
 
-        for(int i=1; i<rows; i++)
-        {
-            for(int j=0; j<columns; j++)
-            {
-                excelData[i-1][j] = eat.getCellData(sheetName, j, i);
-            }
-
-        }
-        return excelData;
     }
 
     @Test
@@ -76,14 +63,14 @@ public class Tests extends TestBase {
         Log.endTestCase("setupTest");
     }
 
-    @Test
-    public void setupTestExcel() throws Exception{
+    @Test(testName="nuData", dataProvider="userData")
+    public void setupTestExcel(String CountryURL) throws Exception{
         Log.startTestCase("setupTestExcel");
         ExcelReader e = new ExcelReader();
         setMobileTest(true);
         Log.info("Mobiletest is "+mobileTest);
         HomePage homePage = new HomePage(driver);
-        homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_BE/ageloc-me-assessment.html");
+        homePage.startAssessment(CountryURL);
         homePage.enterName("Jed", "32", "male");
         homePage.enterEthnicity("caucasian");
         homePage.enterCity("Salt Lake City");

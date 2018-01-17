@@ -1,9 +1,9 @@
 package util;
 
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,13 +11,13 @@ import java.io.IOException;
 
 public class ExcelReader {
 
-    private static XSSFSheet ExcelWSheet;
+    private static HSSFSheet ExcelWSheet;
 
-    private static XSSFWorkbook ExcelWBook;
+    private static HSSFWorkbook ExcelWBook;
 
-    private static XSSFCell Cell;
+    private static HSSFCell Cell;
 
-    private static XSSFRow Row;
+    private static HSSFRow Row;
 
     //This method is to set the File path and to open the Excel file, Pass Excel Path and Sheetname as Arguments to this method
 
@@ -31,7 +31,7 @@ public class ExcelReader {
 
             // Access the required test data sheet
 
-            ExcelWBook = new XSSFWorkbook(ExcelFile);
+            ExcelWBook = new HSSFWorkbook(ExcelFile);
 
             ExcelWSheet = ExcelWBook.getSheet(SheetName);
 
@@ -55,7 +55,7 @@ public class ExcelReader {
 
             // Access the required test data sheet
 
-            ExcelWBook = new XSSFWorkbook(ExcelFile);
+            ExcelWBook = new HSSFWorkbook(ExcelFile);
 
             ExcelWSheet = ExcelWBook.getSheet(SheetName);
 
