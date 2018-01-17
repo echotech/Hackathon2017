@@ -1,6 +1,7 @@
 package test;
 
 import base.TestBase;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.HomePage;
 import util.ExcelReader;
@@ -13,6 +14,36 @@ import static org.testng.Assert.assertEquals;
  * Created by admin on 11/15/2017.
  */
 public class Tests extends TestBase {
+    String xlFilePath = "/KRISHNA VOLUME/Jar Files/poi-3.16-beta1/TestData.xlsx";
+    String sheetName = "Credentials";
+    ExcelApiTest eat = null;
+
+    @DataProvider(name="userData")
+    public Object[][] userFormData() throws Exception
+    {
+        Object[][] data = testData(xlFilePath, sheetName);
+        return data;
+    }
+
+    public Object[][] testData(String xlFilePath, String sheetName) throws Exception
+    {
+        Object[][] excelData = null;
+        eat = new ExcelApiTest(xlFilePath);
+        int rows = eat.getRowCount(sheetName);
+        int columns = eat.getColumnCount(sheetName);
+
+        excelData = new Object[rows-1][columns];
+
+        for(int i=1; i<rows; i++)
+        {
+            for(int j=0; j<columns; j++)
+            {
+                excelData[i-1][j] = eat.getCellData(sheetName, j, i);
+            }
+
+        }
+        return excelData;
+    }
 
     @Test
     public void setupTest() throws Exception{
@@ -76,4 +107,5 @@ public class Tests extends TestBase {
         assertEquals( homePage.getCareCode(), "AB73");
         Log.endTestCase("setupTest");
     }
+
 }
