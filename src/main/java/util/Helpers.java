@@ -27,14 +27,10 @@ public class Helpers {
     public void scrollToAndClickElement(WebElement element, int offset) {
         try {
             waitForElement(element);
-//            JavascriptExecutor jse = (JavascriptExecutor) driver;
-//            jse.executeScript("window.scrollTo(0," + element.getLocation().getY() + ")");
-//            jse.executeScript("window.scrollBy(0,-" + offset + ")");
             Actions act = new Actions(driver);
             act.moveToElement(element).click().perform();
-            System.out.println("Clicked "+ element.getText());
-//            if (mobileTest)
-//                jse.executeScript("window.scrollTo(0,0)");
+            //System.out.println("Clicked "+ element.getText());
+
         } catch (Exception e) {
             System.out.println("Unable to locate element " + element.getText() + ".");
             e.printStackTrace();
