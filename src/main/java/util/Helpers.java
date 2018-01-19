@@ -12,16 +12,11 @@ import page.HomePage;
 public class Helpers {
 
     private WebDriver driver;
-    private boolean mobileTest;
 
     public Helpers(WebDriver driver){
         this.driver=driver;
     }
 
-    public void setMobileTest(boolean mobile){
-        this.mobileTest=mobile;
-    }
-    public boolean getMobileTest(){return mobileTest;}
 
     //Helper methods
     public void scrollToAndClickElement(WebElement element, int offset) {
