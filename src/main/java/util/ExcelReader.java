@@ -12,11 +12,8 @@ import java.io.IOException;
 public class ExcelReader {
 
     private static HSSFSheet ExcelWSheet;
-
     private static HSSFWorkbook ExcelWBook;
-
     private static HSSFCell Cell;
-
     private static HSSFRow Row;
 
     //This method is to set the File path and to open the Excel file, Pass Excel Path and Sheetname as Arguments to this method
