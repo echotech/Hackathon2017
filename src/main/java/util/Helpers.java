@@ -45,7 +45,7 @@ public class Helpers {
     }
 
     public void waitForElement(WebElement e) {
-        WebDriverWait wait = new WebDriverWait(driver, 15);
+        WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.elementToBeClickable(e));
     }
 }
