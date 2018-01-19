@@ -19,17 +19,12 @@ import static org.testng.Assert.assertEquals;
  * Created by admin on 11/15/2017.
  */
 public class Tests extends TestBase {
-    private String sTestCaseName;
-
-    private int iTestCaseRow;
 
     @DataProvider(name="userData")
     public Object[][] createData1() throws Exception{
         Object[][] retObjArr=getTableArray("C:\\\\Users\\\\Jed Reisner\\\\IdeaProjects\\\\Hackathon2017\\\\src\\\\main\\\\java\\\\testdata\\\\assessmentdata.xls",
                 "Sheet1");
         return(retObjArr);
-
-
     }
 
     public String[][] getTableArray(String xlFilePath, String sheetName) throws Exception{
@@ -102,7 +97,7 @@ public class Tests extends TestBase {
         Log.info("Mobiletest is "+mobileTest);
         HomePage homePage = new HomePage(driver);
         homePage.startAssessment(CountryURL);
-        homePage.enterName("Jed", Age, Gender);
+        homePage.enterName(Country, Age, Gender);
         homePage.enterEthnicity(Race);
         homePage.enterCity(City);
         homePage.chemExposure(Integer.parseInt(ChemExp));
