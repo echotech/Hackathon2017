@@ -1,12 +1,17 @@
 package test;
 
 import base.TestBase;
+import jxl.Cell;
+import jxl.Sheet;
+import jxl.Workbook;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.HomePage;
 import util.ExcelReader;
 import util.Helpers;
 import util.Log;
+
+import java.io.File;
 
 import static org.testng.Assert.assertEquals;
 
@@ -19,17 +24,42 @@ public class Tests extends TestBase {
     private int iTestCaseRow;
 
     @DataProvider(name="userData")
-    public Object[][] userFormData() throws Exception
-    {
-        ExcelReader.setExcelFile("C:\\Users\\Jed Reisner\\IdeaProjects\\Hackathon2017\\src\\main\\java\\testdata\\assessmentdata.xls","Sheet1");
-        sTestCaseName=this.toString();
-        sTestCaseName = ExcelReader.getTestCaseName(this.toString());
-        iTestCaseRow = ExcelReader.getRowContains(sTestCaseName,0);
+    public Object[][] createData1() throws Exception{
+        Object[][] retObjArr=getTableArray("C:\\\\Users\\\\Jed Reisner\\\\IdeaProjects\\\\Hackathon2017\\\\src\\\\main\\\\java\\\\testdata\\\\assessmentdata.xls",
+                "Sheet1");
+        return(retObjArr);
 
-        Object[][] testObjArray = ExcelReader.getTableArray("C:\\Users\\Jed Reisner\\IdeaProjects\\Hackathon2017\\src\\main\\java\\testdata\\assessmentdata.xls","Sheet1",iTestCaseRow);
 
-        return (testObjArray);
+    }
 
+    public String[][] getTableArray(String xlFilePath, String sheetName) throws Exception{
+        String[][] tabArray=null;
+
+        Workbook workbook = Workbook.getWorkbook(new File(xlFilePath));
+        Sheet sheet = workbook.getSheet(sheetName);
+        int startRow,startCol, endRow, endCol,ci,cj;
+        Cell tableStart=sheet.findCell("country");
+        startRow=tableStart.getRow();
+        startCol=tableStart.getColumn();
+
+        Cell tableEnd= sheet.getCell(25,33);
+
+        endRow=tableEnd.getRow();
+        endCol=tableEnd.getColumn();
+        System.out.println("startRow="+startRow+", endRow="+endRow+", " +
+                "startCol="+startCol+", endCol="+endCol);
+        tabArray=new String[endRow-startRow-1][endCol-startCol-1];
+        ci=0;
+
+        for (int i=startRow+1;i<endRow;i++,ci++){
+            cj=0;
+            for (int j=startCol+1;j<endCol;j++,cj++){
+                tabArray[ci][cj]=sheet.getCell(j,i).getContents();
+            }
+        }
+
+
+        return(tabArray);
     }
 
     @Test
@@ -63,10 +93,9 @@ public class Tests extends TestBase {
         Log.endTestCase("setupTest");
     }
 
-    @Test(testName="nuData", dataProvider="userData")
+    @Test(dataProvider="userData")
     public void setupTestExcel(String CountryURL) throws Exception{
         Log.startTestCase("setupTestExcel");
-        ExcelReader e = new ExcelReader();
         setMobileTest(true);
         Log.info("Mobiletest is "+mobileTest);
         HomePage homePage = new HomePage(driver);
