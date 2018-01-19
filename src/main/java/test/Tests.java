@@ -20,7 +20,7 @@ import static org.testng.Assert.assertEquals;
  */
 public class Tests extends TestBase {
 
-    @DataProvider(name="userData")
+    @DataProvider(name="userData", parallel = true)
     public Object[][] createData1() throws Exception{
         Object[][] retObjArr=getTableArray("C:\\\\Users\\\\Jed Reisner\\\\IdeaProjects\\\\Hackathon2017\\\\src\\\\main\\\\java\\\\testdata\\\\assessmentdata.xls",
                 "Sheet1");
@@ -88,7 +88,7 @@ public class Tests extends TestBase {
         Log.endTestCase("setupTest");
     }
 
-    @Test(dataProvider="userData")
+    @Test(dataProvider="userData", threadPoolSize = 3, invocationCount = 1)
     public void setupTestExcel(String CountryURL, String Country, String Age, String Gender, String Race, String City, String ChemExp, String SunExp, String SkinType,
     String Irritability, String Aha, String AgeSpots, String Wrinkles, String Nose, String Pores, String PoreSize, String Firmness, String Radiant, String Texture,
     String DayFrag, String DayMoist, String NightFrag, String NightMoist, String OrigAssessment) throws Exception{
