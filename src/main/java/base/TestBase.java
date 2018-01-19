@@ -41,7 +41,11 @@ public class TestBase {
         DesiredCapabilities capabilities = DesiredCapabilities.chrome();
         capabilities.setCapability(ChromeOptions.CAPABILITY, mobileEmulation);
 
+        //Headless
+        options.addArguments("headless");
+
         if(mobileTest){
+            //capabilities.setCapability();
             driver = new ChromeDriver(capabilities);
             System.out.println("Mobile emulation testing for "+deviceName);
         } else {
