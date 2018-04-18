@@ -7,8 +7,6 @@ import jxl.Workbook;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import page.HomePage;
-import util.ExcelReader;
-import util.Helpers;
 import util.Log;
 
 import java.io.File;
@@ -57,39 +55,41 @@ public class Tests extends TestBase {
         return(tabArray);
     }
 
-    @Test
-    public void setupTest() throws Exception{
-        Log.startTestCase("setupTest");
+    @Test(dataProvider="userData")
+    public void testMobile(String CountryURL, String Country, String Age, String Gender, String Race, String City, String ChemExp, String SunExp, String SkinType,
+                               String Irritability, String Aha, String AgeSpots, String Wrinkles, String Nose, String Pores, String PoreSize, String Firmness, String Radiant, String Texture,
+                               String DayFrag, String DayMoist, String NightFrag, String NightMoist, String OrigAssessment) throws Exception{
+        Log.startTestCase("setupTestExcel");
         setMobileTest(true);
         Log.info("Mobiletest is "+mobileTest);
         HomePage homePage = new HomePage(driver);
-        homePage.startAssessment("https://www.nuskin.com/content/nuskin/en_BE/ageloc-me-assessment.html");
-        homePage.enterName("Jed", "32", "male");
-        homePage.enterEthnicity("caucasian");
-        homePage.enterCity("Salt Lake City");
-        homePage.chemExposure(77);
-        homePage.sunExposure(50);
-        homePage.setSkinType("dry");
-        homePage.setSkinIrritability(5);
-        homePage.setAhaUse("stopped");
-        homePage.setAgeSpots(20);
-        homePage.setWrinkles(30,45,55);
-        homePage.setPoreSize(40);
-        homePage.setFirmness("veryFirm");
-        homePage.setRadiance("veryRadiant");
-        homePage.setTexture("rough");
-        homePage.setFragrance("yes");
+        homePage.startAssessment(CountryURL);
+        homePage.enterName(Country, Age, Gender);
+        homePage.enterEthnicity(Race);
+        homePage.enterCity(City);
+        homePage.chemExposure(Integer.parseInt(ChemExp));
+        homePage.sunExposure(Integer.parseInt(SunExp));
+        homePage.setSkinType(SkinType);
+        homePage.setSkinIrritability(Integer.parseInt(Irritability));
+        homePage.setAhaUse(Aha);
+        homePage.setAgeSpots(Integer.parseInt(AgeSpots));
+        homePage.setWrinkles(Integer.parseInt(Wrinkles),Integer.parseInt(Nose),Integer.parseInt(Pores));
+        homePage.setPoreSize(Integer.parseInt(PoreSize));
+        homePage.setFirmness(Firmness);
+        homePage.setRadiance(Radiant);
+        homePage.setTexture(Texture);
+        homePage.setFragrance(DayFrag);
         homePage.setDayMoisturizer("");
-        homePage.setFragrance("no");
-        homePage.setNightMoisturizer("20");
+        homePage.setFragrance(NightFrag);
+        homePage.setNightMoisturizer("");
         homePage.finishAssessment();
         //System.out.println(homePage.getTitle());
-        assertEquals( homePage.getCareCode(), "AB73");
+        assertEquals( homePage.getCareCode(), OrigAssessment);
         Log.endTestCase("setupTest");
     }
 
     @Test(dataProvider="userData")
-    public void setupTestExcel(String CountryURL, String Country, String Age, String Gender, String Race, String City, String ChemExp, String SunExp, String SkinType,
+    public void testDesktop(String CountryURL, String Country, String Age, String Gender, String Race, String City, String ChemExp, String SunExp, String SkinType,
     String Irritability, String Aha, String AgeSpots, String Wrinkles, String Nose, String Pores, String PoreSize, String Firmness, String Radiant, String Texture,
     String DayFrag, String DayMoist, String NightFrag, String NightMoist, String OrigAssessment) throws Exception{
         Log.startTestCase("setupTestExcel");
